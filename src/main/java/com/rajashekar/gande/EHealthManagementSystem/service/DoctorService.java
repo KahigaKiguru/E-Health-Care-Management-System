@@ -1,5 +1,7 @@
 package com.rajashekar.gande.EHealthManagementSystem.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -32,6 +34,14 @@ public class DoctorService {
 //	get doctor by email
 	public Doctor getDoctorByEmail(String email) {
 		return doctorRepository.findByEmail(email);
+	}
+//	get available doctors
+	public List<Doctor> getAvailableDoctors(){
+		return doctorRepository.FindByAvailable("AVAILABLE");
+	}
+//	get doctor by type
+	public List<Doctor> getDoctorsByType(String type){
+		return doctorRepository.findByType(type);
 	}
 //	get all doctors
 	
