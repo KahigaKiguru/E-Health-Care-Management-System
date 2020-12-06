@@ -63,7 +63,7 @@
 					<tr th:each="appointment : ${appointments}">
 						<td th:text="${appointment.doctor.name}"></td>
 						<td th:text="${appointment.doctor.email}"></td>
-						<td th:text="${appointment.time}"></td>
+						<td th:text="${appointment.date}"></td>
 						<td th:text="${appointment.doctor.available}"></td>
 						<!-- <td th:text="${seller.pricePerKillowatt}"></td> -->
 						<td>
@@ -71,8 +71,8 @@
 							th:href="@{/buyPowerConfirmation(_id=${doctor.id}, patient_id=${patient.id})}"
 							class="btn btn-success">Visit Doctor</a>
 							<a
-							th:href="@{/buyPowerConfirmation(_id=${doctor.id}, patient_id=${patient.id})}"
-							class="btn btn-success">Clear Appointment</a>
+							th:href="@{/patient/cancelAppointment(appointment_id=${appointment.id})}"
+							class="btn btn-danger">Cancel Appointment</a>
 							</td>
 					</tr>
 				</tbody>

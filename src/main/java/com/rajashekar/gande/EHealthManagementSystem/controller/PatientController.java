@@ -180,7 +180,7 @@ public class PatientController {
 	@GetMapping("/cancelAppointment")
 	public String deleteAppointment(@RequestParam("appointment_id") int appointment_id) {
 		appointmentService.deleteAppointment(appointment_id);
-		return "redirect:/appointmentsPage?appointment_cancelled";
+		return "redirect:/patient/patientPage?appointment_cancelled";
 	}
 	
 //	get prescriptions
