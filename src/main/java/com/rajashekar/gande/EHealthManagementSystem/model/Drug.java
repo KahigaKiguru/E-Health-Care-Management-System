@@ -37,6 +37,10 @@ public class Drug {
 	@ManyToOne
 	@JoinColumn(foreignKey = @ForeignKey(name = "pharmacy_id"))
 	private Pharmacy pharmacy;
+	
+	@ManyToOne
+	@JoinColumn(foreignKey = @ForeignKey(name = "patient_id"))
+	private Patient patient;
 
 	public int getId() {
 		return id;
@@ -92,6 +96,14 @@ public class Drug {
 
 	public void setPharmacy(Pharmacy pharmacy) {
 		this.pharmacy = pharmacy;
+	}
+
+	public Patient getPatient() {
+		return patient;
+	}
+
+	public void setPatient(Patient patient) {
+		this.patient = patient;
 	}
 	
 	

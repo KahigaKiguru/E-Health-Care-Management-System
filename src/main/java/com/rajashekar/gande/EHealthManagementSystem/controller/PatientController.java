@@ -6,8 +6,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.rajashekar.gande.EHealthManagementSystem.model.Appointment;
 import com.rajashekar.gande.EHealthManagementSystem.model.Doctor;
@@ -37,7 +40,7 @@ public class PatientController {
 
 	@Autowired
 	private DoctorService doctorService;
-	
+
 	@Autowired
 	private AppointmentService appointmentService;
 
@@ -72,70 +75,106 @@ public class PatientController {
 	}
 
 //	register, log in, update, patient
+	@GetMapping("/registerPage")
 	public String registerPage() {
 		return "patient_register";
 	}
-
-	public String registerPatient() {
-		return "patient_login";
+	@PostMapping("/register")
+	public String registerPatient(@ModelAttribute("patient") Patient patient) {
+		patientService.createPatient(patient);
+		return "redirect:/registerPage?registration_successful";
 	}
-
+	@GetMapping("/login")
 	public String login() {
 		return "patient_login";
 	}
-
 //	get available doctors by patient type
-	public String getAvailableDoctors(int patient_id, Model model) {
-		
-		Patient patient = patientService.getPatientById(patient_id);		
-		
-		List<Doctor> availableDoctors = new ArrayList<Doctor>();
-		
-		if(patient.getType().equals("Child")) {
-			model.addAttribute("available_doctors", availableDoctors.addAll(doctorService.getDoctorsByType("pediatrician")));	
-		}else if(patient.getType().equals("Adult")){
-			
-			model.addAttribute("available_doctors", availableDoctors.addAll(doctorService.getDoctorsByType("General Practitioner")));
-			
-		}
+	@GetMapping("/availableDoctors")
+	public String getAvailableDoctors(@RequestParam("patient_id") int patient_id, Model model) {
 
-	return "doctor_list";
-}
-//	create, cancel, update , get appointments
-	
-	public String showAppointmentsPage(int patient_id, Model model) {
 		Patient patient = patientService.getPatientById(patient_id);
+
+		model.addAttribute("available_doctors", doctorService.getDoctorsByPatientType(patient.getType()));
+
+		return "doctor_list";
 		
+	}
+
+//	create, cancel, update , get appointments
+	@GetMapping("/appointmentsPage")
+	public String showAppointmentsPage(@RequestParam("patient_id") int patient_id, Model model) {
+		Patient patient = patientService.getPatientById(patient_id);
+
 		model.addAttribute("appointments", patient.getAppointments());
-		
+
 		return "appointments_page";
 	}
-	
-	public String createAppointment(int patient_id, int doctor_id, @ModelAttribute("appointment") Appointment appointment) {
+
+	@GetMapping("/createAppointmentPage")
+	public void showCreateAppointment(
+			@RequestParam("patient_id") int patient_id,
+			@RequestParam("doctor_id") int doctor_id,
+			Model model) {
+		Patient patient = patientService.getPatientById(patient_id);
+		
+		Doctor doctor = doctorService.getDoctorById(doctor_id);
+
+		model.addAttribute("doctor", doctor);
+		model.addAttribute("patient", patient);
+
+	}
+
+	@PostMapping("/createAppointment")
+	public String createAppointment(
+			@RequestParam("patient_id") int patient_id,
+			@RequestParam("doctor_id") int doctor_id,
+			@ModelAttribute("appointment") Appointment appointment) {
+
 		Patient patient = patientService.getPatientById(patient_id);
 		Doctor doctor = doctorService.getDoctorById(doctor_id);
-		
+
 		appointment.setDoctor(doctor);
 		appointment.setPatient(patient);
+
+		Appointment newAppointment = appointmentService.createAppointment(appointment);
 		
-		appointmentService.createAppointment(appointment);
+		patient.getAppointments().add(newAppointment);
+		doctor.getAppointments().add(newAppointment);
 		
-		return "";
+		
+		patientService.updatePatient(patient);
+		doctorService.updateDoctor(doctor);
+		
+		return "redirect:/appointmentPage?appointment_created";
 	}
-	
-	public String updateAppointment(int appointment_id, @ModelAttribute("appointment") Appointment app) {
+	@PostMapping("/updateAppointment")
+	public String updateAppointment(
+			@RequestParam("appointment_id") int appointment_id,
+			@ModelAttribute("appointment") Appointment app) {
 		Appointment appointment = appointmentService.getAppointmentById(appointment_id);
 		
-		app.setTime(app.getTime());
+		appointment.setTime(app.getTime());
 		
-		return "";
+		appointmentService.updateAppointment(appointment);
+		
+		return "redirect:/appointmentsPage?appointment_updated";
 	}
 	
-	public String deleteAppointment(int appointment_id) {
+	@GetMapping("/cancelAppointment")
+	public String deleteAppointment(@RequestParam("appointment_id") int appointment_id) {
 		appointmentService.deleteAppointment(appointment_id);
-		return "";
+		return "redirect:/appointmentsPage?appointment_cancelled";
 	}
+	
 //	get prescriptions
-//	get, buy, drugs
+	@GetMapping("/prescriptionsPage")
+	public void showPrescriptionsPage(
+			@RequestParam("patient_id") int patient_id,
+			Model model) {
+		
+		Patient patient = patientService.getPatientById(patient_id);
+		model.addAttribute("patient", patient);
+		model.addAttribute("prescriptions", patient.getPrescriptions());
+	}
 
 }

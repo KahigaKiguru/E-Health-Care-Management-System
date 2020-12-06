@@ -34,6 +34,9 @@ public class Appointment {
 	@ManyToOne
 	@JoinColumn(foreignKey = @ForeignKey(name = "patient_id"))
 	private Patient patient;
+	
+	@Column(name = "appointment_report")
+	private String report;
 
 	public int getId() {
 		return id;
@@ -49,6 +52,14 @@ public class Appointment {
 
 	public void setTime(Date time) {
 		this.time = time;
+	}
+	
+	public String getReport() {
+		return report;
+	}
+
+	public void setReport(String report) {
+		this.report = report;
 	}
 
 	public Doctor getDoctor() {

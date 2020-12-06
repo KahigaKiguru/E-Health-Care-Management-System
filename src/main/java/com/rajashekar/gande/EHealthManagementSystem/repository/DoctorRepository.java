@@ -13,5 +13,5 @@ public interface DoctorRepository extends CrudRepository<Doctor, Integer> {
 	Doctor findByEmail(String email);
 //	Doctor findByType(String type);
 	List<Doctor> findByType(String type);
-	List<Doctor> FindByAvailable(String available);
+	List<Doctor> findByAvailable(String available);
 }

@@ -29,4 +29,8 @@ public class PharmacyService {
 	public Pharmacy getPharmacyById(int id) {
 		return pharmacyRepository.findById(id).get();
 	}
+	
+	public void deletePharmacy(int pharmacy_id) {
+		
+	}
 }

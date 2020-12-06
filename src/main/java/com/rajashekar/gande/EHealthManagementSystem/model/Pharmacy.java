@@ -29,7 +29,7 @@ public class Pharmacy {
 	private String email;
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "pharmacy")
-	List<Drug> drugs;
+	private List<Drug> drugs;
 
 	public int getId() {
 		return id;
