@@ -29,7 +29,7 @@ public class PharmacyController {
 	
 //	create, update, delete, get , get all pharmacies
 	
-	@GetMapping("/pharmacy_page")
+	@GetMapping("/pharmacyPage")
 	public String showPharmacyPage() {
 		return "pharmacy_page";
 	}
