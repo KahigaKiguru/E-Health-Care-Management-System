@@ -61,7 +61,7 @@
 
 		<!--/.Navbar-->
 		<br><br>
-
+		<br><br>
 	<div class="container">
 	
 		<div th:if="${param.registration_successful}">
@@ -86,12 +86,12 @@
 					placeholder="Password">
 			</div>
 			<div class="form-group">
-				<label>Select your specialty :</label> <select name="grid">
+				<label>Select your specialty :</label> <select name="type">
 					<option th:each="type : ${doctor_types}" th:text="${type}"></option>
 				</select>
 			</div>
 			<div class="form-group">
-				<label>Are you available ? </label> <select name="grid">
+				<label>Are you available ? </label> <select name="available">
 					<option th:each="available : ${doctor_status}" th:text="${available}"></option>
 				</select>
 			</div>

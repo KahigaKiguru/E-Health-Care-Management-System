@@ -14,6 +14,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
+
 @Entity
 @Table(name = "appointments")
 public class Appointment {
@@ -23,9 +26,12 @@ public class Appointment {
 	@Column(name = "appointment_id")
 	private int id;
 	
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(iso = ISO.DATE)
 	@Column(name = "appointment_date")
-	private Date time;
+	private Date date;
+	
+//	private String status
 	
 	@ManyToOne
 	@JoinColumn(foreignKey = @ForeignKey(name = "doctor_id"))
@@ -46,12 +52,12 @@ public class Appointment {
 		this.id = id;
 	}
 
-	public Date getTime() {
-		return time;
+	public Date getDate() {
+		return date;
 	}
 
-	public void setTime(Date time) {
-		this.time = time;
+	public void setDate(Date time) {
+		this.date = time;
 	}
 	
 	public String getReport() {

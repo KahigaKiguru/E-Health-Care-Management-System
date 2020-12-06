@@ -40,7 +40,7 @@ public class AppointmentService {
 	}
 	
 	public List<Appointment> getAppointmentsByTime(Date time){
-		return appointmentRepository.findByTime(time);
+		return appointmentRepository.findByDate(time);
 	}
 	
 	public List<Appointment> getAppointmentsByPatient(Patient patient){

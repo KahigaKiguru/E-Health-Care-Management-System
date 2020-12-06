@@ -2,6 +2,7 @@ package com.rajashekar.gande.EHealthManagementSystem.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,7 +31,10 @@ public class PharmacyController {
 //	create, update, delete, get , get all pharmacies
 	
 	@GetMapping("/pharmacyPage")
-	public String showPharmacyPage() {
+	public String showPharmacyPage(
+			@RequestParam("patient_id") int patient_id,
+			Model model) {
+		model.addAttribute("patient", patientService.getPatientById(patient_id));
 		return "pharmacy_page";
 	}
 	

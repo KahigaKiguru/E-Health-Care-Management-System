@@ -107,6 +107,7 @@ public class PatientController {
 
 		Patient patient = patientService.getPatientById(patient_id);
 
+		model.addAttribute("patient", patient);
 		model.addAttribute("available_doctors", doctorService.getDoctorsByPatientType(patient.getType()));
 
 		return "doctor_list";
@@ -120,11 +121,11 @@ public class PatientController {
 
 		model.addAttribute("appointments", patient.getAppointments());
 
-		return "appointments_page";
+		return "patient_appointments";
 	}
 
 	@GetMapping("/createAppointmentPage")
-	public void showCreateAppointment(
+	public String showCreateAppointment(
 			@RequestParam("patient_id") int patient_id,
 			@RequestParam("doctor_id") int doctor_id,
 			Model model) {
@@ -134,6 +135,9 @@ public class PatientController {
 
 		model.addAttribute("doctor", doctor);
 		model.addAttribute("patient", patient);
+		model.addAttribute("doctor_name", doctor.getName());
+		
+		return "appointment_create";
 
 	}
 
@@ -158,7 +162,7 @@ public class PatientController {
 		patientService.updatePatient(patient);
 		doctorService.updateDoctor(doctor);
 		
-		return "redirect:/appointmentPage?appointment_created";
+		return "redirect:/patient/patientPage?appointment_created";
 	}
 	@PostMapping("/updateAppointment")
 	public String updateAppointment(
@@ -166,7 +170,7 @@ public class PatientController {
 			@ModelAttribute("appointment") Appointment app) {
 		Appointment appointment = appointmentService.getAppointmentById(appointment_id);
 		
-		appointment.setTime(app.getTime());
+		appointment.setDate(app.getDate());
 		
 		appointmentService.updateAppointment(appointment);
 		

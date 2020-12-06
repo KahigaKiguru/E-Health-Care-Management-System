@@ -91,6 +91,10 @@ public class Doctor implements UserDetails{
 		this.email = email;
 	}
 
+	public String getPasswordDoctor() {
+		return password;
+	}
+	@Override
 	public String getPassword() {
 		return password;
 	}

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +18,7 @@ import com.rajashekar.gande.EHealthManagementSystem.model.Appointment;
 import com.rajashekar.gande.EHealthManagementSystem.model.Doctor;
 import com.rajashekar.gande.EHealthManagementSystem.model.Drug;
 import com.rajashekar.gande.EHealthManagementSystem.model.Patient;
+import com.rajashekar.gande.EHealthManagementSystem.model.PatientDTO;
 import com.rajashekar.gande.EHealthManagementSystem.model.Pharmacy;
 import com.rajashekar.gande.EHealthManagementSystem.model.Prescription;
 import com.rajashekar.gande.EHealthManagementSystem.service.AppointmentService;
@@ -85,7 +87,7 @@ public class DoctorController {
 	@PostMapping("/register")
 	public String registerDoctor(@ModelAttribute("doctor") Doctor doctor) {
 		doctorService.createDoctor(doctor);
-		return "redirect:/registerPage?registration_successful";
+		return "redirect:/doctor/registerPage?registration_successful";
 	}
 	@GetMapping("/login")
 	public String login() {
@@ -120,8 +122,8 @@ public class DoctorController {
 	
 //	show doctor page
 	@GetMapping("/doctorPage")
-	public String showDoctorPage(@RequestParam("doctor_id") int doctor_id, Model model) {
-		Doctor doctor = doctorService.getDoctorById(doctor_id);
+	public String showDoctorPage(@AuthenticationPrincipal Doctor doc, Model model) {
+		Doctor doctor = doctorService.getDoctorByEmail(doc.getEmail());
 		model.addAttribute("doctor", doctor);
 		return "doctor_page";
 	}
@@ -134,7 +136,7 @@ public class DoctorController {
 	}
 //	get, update, cancel appointments
 	@GetMapping("/appointmentsPage")
-	public String showAppointments(@RequestParam("doctor_id") int doctor_id, Model model) {
+	public String showAppointments(@RequestParam("patient_id") int doctor_id, Model model) {
 		Doctor doctor = doctorService.getDoctorById(doctor_id);
 		
 		model.addAttribute("appointments", doctor.getAppointments());
@@ -149,7 +151,7 @@ public class DoctorController {
 		
 		Appointment appointment = appointmentService.getAppointmentById(appointment_id);
 		
-		appointment.setTime(app.getTime());
+		appointment.setDate(app.getDate());
 		appointment.setReport(app.getReport());
 		
 		appointmentService.updateAppointment(appointment);

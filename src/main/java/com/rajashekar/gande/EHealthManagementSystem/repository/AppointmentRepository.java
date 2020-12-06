@@ -14,7 +14,7 @@ import com.rajashekar.gande.EHealthManagementSystem.model.Patient;
 public interface AppointmentRepository extends CrudRepository<Appointment, Integer>{
 
 	
-	List<Appointment> findByTime(Date time);
+	List<Appointment> findByDate(Date time);
 	
 	
 	List<Appointment> findByDoctor(Doctor doctor);

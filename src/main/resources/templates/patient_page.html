@@ -29,9 +29,9 @@
 				<!-- Navbar brand -->
 				<a class="navbar-brand" href="#">Welcome to Platinum E-Clinic</a>
 				<form class="form-inline">
-				<a class="btn btn-outline-white" th:href="@{/pharmacy/pharmacyPage}" type="submit">Pharmacy</a>
-				<a class="btn btn-outline-white" th:href="@{/patient/registerPage}" type="submit">Create an Account</a>
-				<a class="btn btn-outline-white" th:href="@{/patient/login}" type="submit">Log in</a>
+				<a class="btn btn-outline-white" th:href="@{/pharmacy/update}" type="submit">My Account</a>
+				<a class="btn btn-outline-white" th:href="@{/patient/appointmentsPage(patient_id=${patient.id})}" type="submit">My Appointments</a>
+				<a class="btn btn-outline-white" th:href="@{/patient/logout}" type="submit">Log out</a>
 				
 				</form>
 			</div>
@@ -47,7 +47,7 @@
 				class="mask d-flex  justify-content-center align-items-center">
 				<!-- Content -->
 				<div class="container">
-<!-- 					<div
+					<div
 						class="col-md-6 white-text text-center text-md-left mt-xl-5 mb-5 wow fadeInLeft"
 						data-wow-delay="0.3s">
 						<h1 class="h1-responsive font-weight-bold mt-sm-5">Buy and
@@ -56,14 +56,14 @@
 						<h6 class="mb-4">The marketplace for clean energy producers
 							and consumers</h6>
 						<a class="btn btn-white"
-							th:href="@{/sellPowerConfirmation(user_id=${user.id})}">Sell
-							Power</a> <a class="btn btn-outline-white"
-							th:href="@{/buyPowerPage(user_id=${user.id})}">Buy Power</a>
-					</div>-->
+							th:href="@{/patient/availableDoctors(patient_id=${patient.id})}">Get available Doctors</a>
+							 <a class="btn btn-outline-blue"
+							th:href="@{/pharmacy/pharmacyPage(patient_id=${patient.id})}">Visit our Pharmacy</a>
+					</div>
 					<div th:if="${param.purchase_successful}">
 						<div class="alert alert-success">
 							<span> Purchase Successful! </span> <span
-								th:text="${user.unitsBought}"></span>
+								th:text="${patient.unitsBought}"></span>
 						</div>
 					</div>
 					<div th:if="${param.sale_successful}">
