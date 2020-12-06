@@ -1,13 +1,13 @@
 package com.rajashekar.gande.EHealthManagementSystem.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-@RequestMapping("/")
 public class MainController {
 
-	public String  homePage() {
-		return "index";
+	@GetMapping("/")
+	public String homePage() {
+		return "redirect:/patient/login";
 	}
 }

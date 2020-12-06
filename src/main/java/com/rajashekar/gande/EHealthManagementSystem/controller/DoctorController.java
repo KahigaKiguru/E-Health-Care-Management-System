@@ -78,7 +78,7 @@ public class DoctorController {
 //	register, log in, update, doctor
 	@GetMapping("/registerPage")
 	public String showDoctorRegistrationPage(Model model) {
-		model.addAttribute("doctor_types", doctor_status);
+		model.addAttribute("doctor_status", doctor_status);
 		model.addAttribute("doctor_types", doctor_types);
 		return "doctor_register";
 	}
@@ -116,6 +116,8 @@ public class DoctorController {
 		
 		return "redirect:/doctorPage?account_updated";
 	}
+//	all doctors
+	
 //	show doctor page
 	@GetMapping("/doctorPage")
 	public String showDoctorPage(@RequestParam("doctor_id") int doctor_id, Model model) {

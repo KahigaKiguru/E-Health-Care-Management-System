@@ -1,10 +1,99 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Patient Login</title>
+<!-- Font Awesome -->
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+<!-- Google Fonts -->
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+<!-- Bootstrap core CSS -->
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css"
+	rel="stylesheet">
+<!-- Material Design Bootstrap -->
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css"
+	rel="stylesheet">
+<link rel="stylesheet" th:href="@{/css/custom.css}" />
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+	integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+	integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+	crossorigin="anonymous"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+	crossorigin="anonymous"></script>
 </head>
 <body>
+	<header>
+		<!--Navbar-->
+		<nav
+			class="navbar navbar-expand-lg navbar-dark secondary-color fixed-top">
+			<div class="container">
+				<a class="navbar-brand" href="#">Doctor Login</a>
+				<form class="form-inline">
+					<!-- <a class="btn btn-outline-white"
+						th:href="@{/pharmacy/pharmacyPage}" type="submit"> Visit our world class Pharmacy</a>  -->
+						 
+					<div class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4"
+							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<i class="fas fa-user"></i> Create an account
+						</a>
+						<div class="dropdown-menu dropdown-menu-right dropdown-info"
+							aria-labelledby="navbarDropdownMenuLink-4">
+							<a class="dropdown-item" th:href="@{/patient/registerPage}"
+						type="submit">Patient Account</a> 
+						<a
+						class="dropdown-item" th:href="@{/doctor/registerPage}"
+						type="submit">Doctor Account</a>
+						</div>
+					</div>
+				</form>
+			</div>
+		</nav>
 
+		<!--/.Navbar-->
+		<br><br>
+
+		<div class="view"
+			style="background-image: url('https://thumbs.dreamstime.com/b/hospital-de-sant-pau-fountain-art-history-barcelona-city-spain-flowing-water-trees-historic-building-time-enchanting-147222353.jpg'); background-repeat: no-repeat; background-size: cover; background-position: center center;">
+			<div
+				class="mask rgba-gradient d-flex justify-content-center align-items-center">
+				<!-- Content -->
+				<div class="container justify-content-center">
+					<div class="col-md-6 white-text  mt-xl-5 wow fadeInLeft">
+						<h1>Doctor Credentials</h1>
+						<hr class="hr-light">
+						<form th:action="@{/doctor/login}" method="post">
+
+							<input type="text" id="username" name="username"
+								placeholder="Email Address" class="form-control  col-46"
+								required autofocus="autofocus" /> <br> <input
+								type="password" id="password" name="password"
+								placeholder="Password" class="form-control col-46" required
+								autofocus="autofocus" /> <br> <input type="submit"
+								id="login-submit" name="login-submit"
+								class="btn btn-info btn-md" value="Log In" /> <br>
+						</form>
+						<hr class="hr-light">
+					</div>
+				</div>
+				<!-- <div th:if="${param.sale_successful}">
+					<div class="alert alert-success">
+						<span>Sale Successful!</span>
+					</div>
+				</div> -->
+			</div>
+		</div>
+	</header>
+	<main></main>
+	<footer></footer>
 </body>
 </html>

@@ -30,7 +30,7 @@ public class PatientSecurity extends WebSecurityConfigurerAdapter{
     protected void configure(HttpSecurity http) throws Exception {
         http.antMatcher("/patient/**")
                 .authorizeRequests()
-                .antMatchers("/patient/**", "/doctor/**", "/pharmacy/**")
+                .antMatchers("/doctor/**", "/patient/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
@@ -38,6 +38,7 @@ public class PatientSecurity extends WebSecurityConfigurerAdapter{
                 .formLogin()
                 .loginPage("/patient/login")
                 .defaultSuccessUrl("/patient/patientPage")
+                .failureUrl("/patient/login?error_logging_in")
                 .permitAll(true)
                 .and()
                 .logout()

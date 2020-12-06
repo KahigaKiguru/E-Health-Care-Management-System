@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
-<title>Pharmacy</title>
+<title>Patient Login</title>
 <!-- Font Awesome -->
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
@@ -18,63 +18,83 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css"
 	rel="stylesheet">
 <link rel="stylesheet" th:href="@{/css/custom.css}" />
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+	integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+	integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+	crossorigin="anonymous"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+	crossorigin="anonymous"></script>
 </head>
 <body>
 	<header>
 		<!--Navbar-->
 		<nav
 			class="navbar navbar-expand-lg navbar-dark secondary-color fixed-top">
-
 			<div class="container">
-				<!-- Navbar brand -->
-				<a class="navbar-brand" href="#">Patient Registration</a>
+				<a class="navbar-brand" href="#">Create your Patient account</a>
 				<form class="form-inline">
-				<a class="btn btn-outline-white" th:href="@{/pharmacy/pharmacyPage}" type="submit">Pharmacy</a>
-				<a class="btn btn-outline-white" th:href="@{/patient/registerPage}" type="submit">Create an Account</a>
-				<a class="btn btn-outline-white" th:href="@{/patient/login}" type="submit">Log in</a>
-				
+					<!-- <a class="btn btn-outline-white"
+						th:href="@{/pharmacy/pharmacyPage}" type="submit"> Visit our world class Pharmacy</a>  -->
+						 
+					<div class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4"
+							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<i class="fas fa-user"></i> Log in to your account
+						</a>
+						<div class="dropdown-menu dropdown-menu-right dropdown-info"
+							aria-labelledby="navbarDropdownMenuLink-4">
+							<a class="dropdown-item" th:href="@{/patient/login}"
+						type="submit">Patient Account</a> 
+						<a
+						class="dropdown-item" th:href="@{/doctor/login}"
+						type="submit">Doctor Account</a>
+						</div>
+					</div>
 				</form>
 			</div>
 		</nav>
+
 		<!--/.Navbar-->
-		<br>
-		<br>
-		<br>
-		
-		<div class="view"
-			style="background-image: url(''); background-repeat: no-repeat; background-size: cover; background-position: center center;">
-			<div
-				class="mask d-flex  justify-content-center align-items-center">
-				<!-- Content -->
-				<div class="container">
-<!-- 					<div
-						class="col-md-6 white-text text-center text-md-left mt-xl-5 mb-5 wow fadeInLeft"
-						data-wow-delay="0.3s">
-						<h1 class="h1-responsive font-weight-bold mt-sm-5">Buy and
-							Sell Clean Energy on your grid with Power Mall</h1>
-						<hr class="hr-light">
-						<h6 class="mb-4">The marketplace for clean energy producers
-							and consumers</h6>
-						<a class="btn btn-white"
-							th:href="@{/sellPowerConfirmation(user_id=${user.id})}">Sell
-							Power</a> <a class="btn btn-outline-white"
-							th:href="@{/buyPowerPage(user_id=${user.id})}">Buy Power</a>
-					</div>-->
-					<div th:if="${param.purchase_successful}">
-						<div class="alert alert-success">
-							<span> Purchase Successful! </span> <span
-								th:text="${user.unitsBought}"></span>
-						</div>
-					</div>
-					<div th:if="${param.sale_successful}">
-						<div class="alert alert-success">
-							<span>Sale Successful!</span>
-						</div>
-					</div>
-					</div>
-				</div>
+		<br><br>
+		<br><br>
+	<div class="container">
+	
+		<div th:if="${param.registration_successful}">
+			<div class="alert alert-info">Your Registration was Successful.
+				Proceed to log in !</div>
+		</div>
+		<form method="post" class="form-signin" th:object="${patient}"
+			th:action="@{/patient/register}">
+			<br>
+			<h2 class="form-signin-heading">Create an account</h2>
+			<br>
+			<div class="form-group">
+				<input type="text" th:field="*{name}" class="form-control"
+					placeholder="Username" autofocus="autofocus">
 			</div>
-	</header>
+			<div class="form-group">
+				<input type="text" th:field="*{email}" class="form-control"
+					placeholder="Email Address" autofocus="autofocus">
+			</div>
+			<div class="form-group">
+				<input type="password" th:field="*{password}" class="form-control"
+					placeholder="Password">
+			</div>
+			<div class="form-group">
+				<label>Select your age group:</label> 
+				<select name="type">
+					<option th:each="type : ${patient_types}" th:text="${type}"></option>
+				</select>
+			</div>
+			<button class="btn btn-lg btn-secondary btn-block" type="submit">Create my account</button>
+		</form>
+		<hr>
+	</div>
 	<main></main>
 	<footer></footer>
 </body>

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ import com.rajashekar.gande.EHealthManagementSystem.model.Appointment;
 import com.rajashekar.gande.EHealthManagementSystem.model.Doctor;
 import com.rajashekar.gande.EHealthManagementSystem.model.Drug;
 import com.rajashekar.gande.EHealthManagementSystem.model.Patient;
+import com.rajashekar.gande.EHealthManagementSystem.model.PatientDTO;
 import com.rajashekar.gande.EHealthManagementSystem.model.Pharmacy;
 import com.rajashekar.gande.EHealthManagementSystem.model.Prescription;
 import com.rajashekar.gande.EHealthManagementSystem.service.AppointmentService;
@@ -76,19 +78,30 @@ public class PatientController {
 
 //	register, log in, update, patient
 	@GetMapping("/registerPage")
-	public String registerPage() {
+	public String registerPage(Model model) {
+		model.addAttribute("patient_types", patient_types);
 		return "patient_register";
 	}
 	@PostMapping("/register")
 	public String registerPatient(@ModelAttribute("patient") Patient patient) {
 		patientService.createPatient(patient);
-		return "redirect:/registerPage?registration_successful";
+		return "redirect:/patient/registerPage?registration_successful";
 	}
 	@GetMapping("/login")
 	public String login() {
 		return "patient_login";
 	}
+	
+//	show patient page
+	@GetMapping("/patientPage")
+	public String showPatientPage(@AuthenticationPrincipal PatientDTO pt, Model model) {
+		Patient patient = patientService.getPatientByEmail(pt.getUsername());
+		model.addAttribute("patient", patient);
+		return "patient_page";
+	}
+	
 //	get available doctors by patient type
+	
 	@GetMapping("/availableDoctors")
 	public String getAvailableDoctors(@RequestParam("patient_id") int patient_id, Model model) {
 

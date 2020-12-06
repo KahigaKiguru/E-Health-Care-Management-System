@@ -1,6 +1,5 @@
 package com.rajashekar.gande.EHealthManagementSystem.model;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -22,18 +21,10 @@ import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Table(name = "patients", uniqueConstraints = @UniqueConstraint(columnNames = "email_address"))
-public class Patient implements UserDetails{
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -543094470145774419L;
+public class Patient{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -96,7 +87,7 @@ public class Patient implements UserDetails{
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
+	
 	public String getPassword() {
 		return password;
 	}
@@ -144,42 +135,5 @@ public class Patient implements UserDetails{
 	public void setRoles(Collection<Role> roles) {
 		this.roles = roles;
 	}
-
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		List<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>();
-		for (Role role : roles) {
-			authorities.add(new SimpleGrantedAuthority(role.getName()));
-		}
-		return authorities;
-	}
-
-	@Override
-	public String getUsername() {
-		return this.email;
-	}
-
-	@Override
-	public boolean isAccountNonExpired() {
-		return true;
-	}
-
-	@Override
-	public boolean isAccountNonLocked() {
-		
-		return true;
-	}
-
-	@Override
-	public boolean isCredentialsNonExpired() {
-		return true;
-	}
-
-	@Override
-	public boolean isEnabled() {
-		return true;
-	}
-	
-	
 	
 }
