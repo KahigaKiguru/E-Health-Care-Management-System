@@ -20,6 +20,10 @@ public class DrugService {
 	public void updateDrug(Drug drug) {
 		drugRepository.save(drug);
 	}
+//	delete drug
+	public void deleteDrug(int drug_id) {
+		drugRepository.deleteById(drug_id);
+	}
 //	get drug by id
 	public Drug getDrugById(int id) {
 		return drugRepository.findById(id).get();

@@ -134,9 +134,19 @@ public class DoctorController {
 		
 		return "doctor_patients";
 	}
+
+// 	get Patients
+
+	@GetMapping("/patientsPage")
+	public String myPatients(@RequestParam("doctor_id") int doctor_id, Model model) {
+		Doctor doctor = doctorService.getDoctorById(doctor_id);
+		model.addAttribute("patients", doctor.getPatients());
+		
+		return "doctor_patients";
+	}
 //	get, update, cancel appointments
 	@GetMapping("/appointmentsPage")
-	public String showAppointments(@RequestParam("patient_id") int doctor_id, Model model) {
+	public String showAppointments(@RequestParam("doctor_id") int doctor_id, Model model) {
 		Doctor doctor = doctorService.getDoctorById(doctor_id);
 		
 		model.addAttribute("appointments", doctor.getAppointments());

@@ -58,7 +58,7 @@
 						<a class="btn btn-white"
 							th:href="@{/patient/availableDoctors(patient_id=${patient.id})}">Get available Doctors</a>
 							 <a class="btn btn-outline-blue"
-							th:href="@{/pharmacy/pharmacyPage(patient_id=${patient.id})}">Visit our Pharmacy</a>
+							th:href="@{/pharmacy/drugsPage(patient_id=${patient.id})}">Visit our Pharmacy</a>
 					</div>
 					<div th:if="${param.purchase_successful}">
 						<div class="alert alert-success">

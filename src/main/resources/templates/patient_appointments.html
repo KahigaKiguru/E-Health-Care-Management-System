@@ -65,11 +65,7 @@
 						<td th:text="${appointment.doctor.email}"></td>
 						<td th:text="${appointment.date}"></td>
 						<td th:text="${appointment.doctor.available}"></td>
-						<!-- <td th:text="${seller.pricePerKillowatt}"></td> -->
 						<td>
-						<a
-							th:href="@{/buyPowerConfirmation(_id=${doctor.id}, patient_id=${patient.id})}"
-							class="btn btn-success">Visit Doctor</a>
 							<a
 							th:href="@{/patient/cancelAppointment(appointment_id=${appointment.id})}"
 							class="btn btn-danger">Cancel Appointment</a>

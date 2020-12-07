@@ -28,6 +28,9 @@ public class Pharmacy {
 	@Column(name = "email_address")
 	private String email;
 	
+	@Column(name = "category")
+	private String category;
+	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "pharmacy")
 	private List<Drug> drugs;
 
@@ -62,6 +65,15 @@ public class Pharmacy {
 	public void setDrugs(List<Drug> drugs) {
 		this.drugs = drugs;
 	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+	
 	
 	
 }

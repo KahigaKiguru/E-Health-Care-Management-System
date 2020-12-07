@@ -28,10 +28,9 @@ import com.rajashekar.gande.EHealthManagementSystem.service.PatientService;
 @RequestMapping("/patient")
 public class PatientController {
 
-	static List<String> patient_types = null;
+	static List<String> patient_types = new ArrayList<String>();
 
 	static {
-		patient_types = new ArrayList<String>();
 		patient_types.add("Adult");
 		patient_types.add("Child");
 
@@ -132,7 +131,11 @@ public class PatientController {
 		Patient patient = patientService.getPatientById(patient_id);
 		
 		Doctor doctor = doctorService.getDoctorById(doctor_id);
-
+		
+		doctor.getPatients().add(patient);
+		
+		doctorService.updateDoctor(doctor);
+		
 		model.addAttribute("doctor", doctor);
 		model.addAttribute("patient", patient);
 		model.addAttribute("doctor_name", doctor.getName());

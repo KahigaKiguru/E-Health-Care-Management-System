@@ -49,20 +49,9 @@
 						<hr class="hr-light">
 						<h6 class="mb-4">My Dashboard</h6>
 						<a class="btn btn-white"
-							th:href="@{/doctor/sellPowerConfirmation(doctor_id=${doctor.id})}">My Patients</a> <a class="btn btn-outline-white"
+							th:href="@{/doctor/patientsPage(doctor_id=${doctor.id})}">My Patients</a> <a class="btn btn-outline-white"
 							th:href="@{/doctor/appointmentsPage(doctor_id=${doctor.id})}">My Appointments</a>
 					</div>
-<!-- 					<div th:if="${param.purchase_successful}">
-						<div class="alert alert-success">
-							<span> Purchase Successful! </span> <span
-								th:text="${doctor.unitsBought}"></span>
-						</div> -->
-					</div>
-<!-- 					<div th:if="${param.sale_successful}">
-						<div class="alert alert-success">
-							<span>Sale Successful!</span>
-						</div>
-					</div> -->
 					</div>
 				</div>
 			</div>
