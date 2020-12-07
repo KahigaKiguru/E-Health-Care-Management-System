@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,7 +42,10 @@ public class PatientController {
 
 	@Autowired
 	private DoctorService doctorService;
-
+	
+	@Autowired
+	BCryptPasswordEncoder passwordEncoder;
+	
 	@Autowired
 	private AppointmentService appointmentService;
 
@@ -89,6 +93,27 @@ public class PatientController {
 	@GetMapping("/login")
 	public String login() {
 		return "patient_login";
+	}
+	
+//	update user
+	@GetMapping("/updatePatientPage")
+	public String patientUpdatePage(@RequestParam("patient_id") int patient_id, Model model) {
+		model.addAttribute("patient", patientService.getPatientById(patient_id));
+		model.addAttribute("patient_types", patient_types);
+		return "patient_update";
+	}
+	
+	@PostMapping("/updatePatient")
+	public String updatePatient(int patient_id, @ModelAttribute("patient") Patient pt) {
+		Patient patient = patientService.getPatientById(patient_id);
+		patient.setEmail(pt.getEmail());
+		patient.setName(pt.getName());
+		patient.setPassword(passwordEncoder.encode(pt.getPassword()));
+		patient.setType(pt.getType());
+		
+		patientService.updatePatient(patient);
+		
+		return "patient_page";
 	}
 	
 //	show patient page

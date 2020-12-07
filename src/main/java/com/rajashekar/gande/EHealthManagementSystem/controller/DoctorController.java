@@ -18,7 +18,6 @@ import com.rajashekar.gande.EHealthManagementSystem.model.Appointment;
 import com.rajashekar.gande.EHealthManagementSystem.model.Doctor;
 import com.rajashekar.gande.EHealthManagementSystem.model.Drug;
 import com.rajashekar.gande.EHealthManagementSystem.model.Patient;
-import com.rajashekar.gande.EHealthManagementSystem.model.PatientDTO;
 import com.rajashekar.gande.EHealthManagementSystem.model.Pharmacy;
 import com.rajashekar.gande.EHealthManagementSystem.model.Prescription;
 import com.rajashekar.gande.EHealthManagementSystem.service.AppointmentService;
@@ -96,6 +95,8 @@ public class DoctorController {
 	@GetMapping("/updatePage")
 	public String showUpdatePage(@RequestParam("doctor_id") int doctor_id, Model model) {
 		model.addAttribute("doctor", doctorService.getDoctorById(doctor_id));
+		model.addAttribute("doctor_types", doctor_types);
+		model.addAttribute("doctor_status", doctor_status);
 		return "doctor_update";
 	}
 	@PostMapping("/update")
@@ -111,12 +112,12 @@ public class DoctorController {
 		doctor.setAvailable(doc.getAvailable());
 		doctor.setPassword(passwordEncoder.encode(doc.getPassword()));
 		doctor.setType(doc.getType());
-		
+				
 		doctorService.updateDoctor(doctor);
 		
 		model.addAttribute("doctor", doctor);
 		
-		return "redirect:/doctorPage?account_updated";
+		return "redirect:/doctor/doctorPage?account_updated";
 	}
 //	all doctors
 	

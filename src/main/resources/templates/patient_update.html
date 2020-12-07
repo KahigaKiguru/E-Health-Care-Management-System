@@ -49,8 +49,8 @@
 	<br>
 	<br>
 	<div class="container">
-		<form th:object="${doctor}"
-			th:action="@{/doctor/update(doctor_id=${doctor.id})}"
+		<form th:object="${patient}"
+			th:action="@{/patient/updatePatient(patient_id=${patient.id})}"
 			class="border border-light p-5" method="post">
 			
 			<br> <label>Your name : </label> <br> <input type="text"
@@ -66,13 +66,8 @@
 
 			<br>
 			<div class="form-group">
-				<label>Select your specialty :</label> <select name="type">
-					<option th:each="type : ${doctor_types}" th:text="${type}"></option>
-				</select>
-			</div>
-			<div class="form-group">
-				<label>Are you available ? </label> <select name="available">
-					<option th:each="available : ${doctor_status}" th:text="${available}"></option>
+				<label>Select your age group:</label> <select name="type">
+					<option th:each="type : ${patient_types}" th:text="${type}"></option>
 				</select>
 			</div>
 			<button class="btn btn-lg btn-secondary btn-block" data-toggle="modal"

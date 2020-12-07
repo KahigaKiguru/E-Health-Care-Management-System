@@ -29,7 +29,7 @@
 				<!-- Navbar brand -->
 				<a class="navbar-brand" href="#">Welcome to Platinum E-Clinic</a>
 				<form class="form-inline">
-				<a class="btn btn-outline-white" th:href="@{/pharmacy/update}" type="submit">My Account</a>
+				<a class="btn btn-outline-white" th:href="@{/patient/updatePatientPage(patient_id=${patient.id})}" type="submit">My Account</a>
 				<a class="btn btn-outline-white" th:href="@{/patient/appointmentsPage(patient_id=${patient.id})}" type="submit">My Appointments</a>
 				<a class="btn btn-outline-white" th:href="@{/patient/logout}" type="submit">Log out</a>
 				
@@ -60,11 +60,6 @@
 							 <a class="btn btn-outline-blue"
 							th:href="@{/pharmacy/drugsPage(patient_id=${patient.id})}">Visit our Pharmacy</a>
 					</div>
-					<div th:if="${param.purchase_successful}">
-						<div class="alert alert-success">
-							<span> Purchase Successful! </span> <span
-								th:text="${patient.unitsBought}"></span>
-						</div>
 					</div>
 					<div th:if="${param.sale_successful}">
 						<div class="alert alert-success">

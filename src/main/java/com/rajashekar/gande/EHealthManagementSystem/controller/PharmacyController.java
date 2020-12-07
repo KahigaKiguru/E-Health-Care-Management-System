@@ -50,16 +50,18 @@ public class PharmacyController {
 	  @GetMapping("/pharmacyList") public String showPharmacyPage(Model model) {
 	  
 		  model.addAttribute("pharmacy_categories", pharmacy_categories);
-	  
+		  model.addAttribute("pharmacies", pharmacyService.getAllPharmacies());
 		  return "pharmacy_list"; 
 	  
 	  }
 
 	@GetMapping("/pharmacyPage")
-	public String showPharmacyList(@RequestParam("pharmacy_id") int pharmacy_id, Model model) {
+	public String showPharmacyList(
+			@RequestParam("pharmacy_id") int pharmacy_id, Model model) {
 		Pharmacy pharmacy = pharmacyService.getPharmacyById(pharmacy_id);
 		model.addAttribute("pharmacy", pharmacy);
 		model.addAttribute("available_drugs", pharmacy.getDrugs());
+		model.addAttribute("pharmacy_id", pharmacy_id);
 		return "pharmacy_page";
 	}
 	@GetMapping("/createPage")
@@ -71,7 +73,7 @@ public class PharmacyController {
 	@PostMapping("/create")
 	public String createPharmacy(@ModelAttribute("pharmacy") Pharmacy pharmacy) {
 		pharmacyService.createPharmacy(pharmacy);
-		return "redirect:/pharmacy/pharmacyPage?pharmacy_added";
+		return "redirect:/pharmacy/pharmacyList?pharmacy_added";
 	}
 
 	@PostMapping("/update")
@@ -93,8 +95,17 @@ public class PharmacyController {
 		return "drug_list";
 	}
 
+	@GetMapping("/addDrugPage")
+	public String addDrugPage(@RequestParam("pharmacy_id") int pharmacy_id, Model model) {
+		
+		Pharmacy pharmacy = pharmacyService.getPharmacyById(pharmacy_id);
+		model.addAttribute("pharmacy", pharmacy);
+		return "drug_add";
+	}
 	@PostMapping("/addDrug")
-	public String addDrug(@RequestParam("pharmacy_id") int pharmacy_id, @ModelAttribute("drug") Drug drug) {
+	public String addDrug(
+			@RequestParam("pharmacy_id") int pharmacy_id,
+			@ModelAttribute("drug") Drug drug) {
 		Pharmacy pharmacy = pharmacyService.getPharmacyById(pharmacy_id);
 
 		drug.setPharmacy(pharmacy);
@@ -103,9 +114,16 @@ public class PharmacyController {
 		pharmacyService.updatePharmacy(pharmacy);
 		drugService.updateDrug(drug);
 
-		return "redirect:/pharmacyPage?drug_added";
+		return "redirect:/pharmacyList?drug_added";
 	}
 
+	@GetMapping("/updateDrugPage")
+	public String updateDrugPage(@RequestParam("pharmacy_id") int pharmacy_id, @RequestParam("drug_id") int drug_id, Model model) {
+		
+		model.addAttribute("drug", drugService.getDrugById(drug_id));
+		model.addAttribute("pharmacy", pharmacyService.getPharmacyById(pharmacy_id));
+		return "drug_update";
+	}
 	@PostMapping("/updateDrug")
 	public String updateDrug(@RequestParam("drug_id") int drug_id, @ModelAttribute("drug") Drug pdrug) {
 		Drug drug = drugService.getDrugById(drug_id);
@@ -118,22 +136,30 @@ public class PharmacyController {
 
 		drugService.updateDrug(drug);
 
-		return "redirect:/pharmacy/pharmacyPage?drug_updated";
+		return "redirect:/pharmacy/pharmacyList?drug_updated";
 	}
 
 	@GetMapping("/deleteDrug")
 	public String deleteDrug(@RequestParam("drug_id") int drug_id) {
 		drugService.deleteDrug(drug_id);
-		return "redirect:/pharmacy/pharmacyPage?drug_deleted";
+		return "redirect:/pharmacy/pharmacyList?drug_deleted";
 	}
-
-	@GetMapping("/buyDrug")
-	public String buyDrugs(
+	@GetMapping("/buyDrugPage")
+	public String buyDrugPage(
+			@RequestParam("patient_id") int patient_id,
+			@RequestParam("drug_id") int drug_id, Model model) {
+		model.addAttribute("patient", patientService.getPatientById(patient_id));
+		model.addAttribute("drug", drugService.getDrugById(drug_id));
+		return "drug_buy";
+	}
+	@PostMapping("/buyDrug")
+	public String buyDrug(
 			@RequestParam("patient_id") int patient_id,
 			@RequestParam("drug_id") int drug_id,
 			@RequestParam("quantity") int quantity) {
 
 		Patient patient = patientService.getPatientById(patient_id);
+		
 		Drug drug = drugService.getDrugById(drug_id);
 
 		drug.setQuantity(drug.getQuantity() - quantity);
@@ -143,6 +169,6 @@ public class PharmacyController {
 		patientService.updatePatient(patient);
 		drugService.updateDrug(drug);
 
-		return "redirect:/pharmacyPage?purchase_successful";
+		return "redirect:/patient/patientPage?purchase_successful";
 	}
 }

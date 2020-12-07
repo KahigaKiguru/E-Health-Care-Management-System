@@ -29,7 +29,7 @@
 				<!-- Navbar brand -->
 				<a class="col-md-6 white-text text-center text-md-left  wow fadeInLeft" th:text="Welcome +':: Dr. '+ ${ doctor.name}"></a>
 				<form class="form-inline">
-				<a class="btn btn-outline-white" th:href="@{/updatePage(doctor_id=${doctor.id})}" type="submit">My Account</a>
+				<a class="btn btn-outline-white" th:href="@{/doctor/updatePage(doctor_id=${doctor.id})}" type="submit">My Account</a>
 					<a class="btn btn-outline-white" th:href="@{/doctor/logout}" type="submit">Log Out</a>
 				</form>
 			</div>

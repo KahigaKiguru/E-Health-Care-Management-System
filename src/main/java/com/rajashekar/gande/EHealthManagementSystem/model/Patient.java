@@ -135,5 +135,6 @@ public class Patient{
 	public void setRoles(Collection<Role> roles) {
 		this.roles = roles;
 	}
+
 	
 }

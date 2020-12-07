@@ -30,7 +30,7 @@
 				<a class="navbar-brand" href="#">E-Pharmacy</a>
 				<form class="form-inline">
 				<a class="btn btn-outline-white" th:href="@{/patient/patientPage}" type="submit">Home</a>
-				<a class="btn btn-outline-white" th:if="${patient.name} == 'Administrator'" th:href="@{/pharmacy/pharmacyPage}" type="submit">Pharmacy Management</a>
+				<a class="btn btn-outline-white"  th:href="@{/pharmacy/addDrugPage(pharmacy_id=${pharmacy.id})}" type="submit">Add Drug</a>
 				<a class="btn btn-outline-white" th:href="@{/patient/logout}" type="submit">Log Out</a>
 				
 				</form>
@@ -54,25 +54,9 @@
 								th:text="${user.unitsBought}"></span>
 						</div>
 					</div>
-					<div th:if="${param.sale_successful}">
-						<div class="alert alert-success">
-							<span>Sale Successful!</span>
-						</div>
-					</div>
 					</div>
 				</div>
-						<div class="container my-2">
- 			<div th:if="${param.purchase_successful}">
-				<div class="alert alert-success">
-					<span> Purchase Successful! Total KwH Available: </span> <span
-						th:text="${user.unitsBought}"></span>
-				</div>
-			</div>
-			<div th:if="${param.sale_successful}">
-				<div class="alert alert-success">
-					<span>Sale Successful! Total KwH sold: </span>
-				</div>
-			</div>
+		<div class="container my-2">
 			<table class="table table-striped table-responsive-md">
 				<thead>
 					<tr>
@@ -91,13 +75,14 @@
 						<td th:text="${drug.dosage}"></td>
 						<td th:text="${drug.description}"></td>
 						<td><a
-							th:href="@{/pharmacy/updateDrug(
+							th:href="@{/pharmacy/updateDrugPage(
+							pharmacy_id=${pharmacy.id},
 							drug_id=${drug.id})}"
-							class="btn btn-info">Update Drug</a>
+							class="btn btn-sm btn-info">Update Drug</a>
 							<a
 							th:href="@{/pharmacy/deleteDrug(
 							drug_id=${drug.id})}"
-							class="btn btn-danger">Remove Drug</a>
+							class="btn btn-sm btn-danger">Remove Drug</a>
 							</td>
 					</tr>
 				</tbody>

@@ -83,11 +83,10 @@
 						<tr th:each="pharmacy : ${pharmacies}">
 							<td th:text="${pharmacy.name}"></td>
 							<td th:text="${pharmacy.category}"></td>
-							<td th:text="${drug.email}"></td>
+							<td th:text="${pharmacy.email}"></td>
 							<td><a
 								th:href="@{/pharmacy/pharmacyPage(
-							patient_id=${patient.id},
-							drug_id=${drug.id})}"
+							pharmacy_id=${pharmacy.id})}"
 								class="btn btn-success">Manage Pharmacy</a></td>
 						</tr>
 					</tbody>

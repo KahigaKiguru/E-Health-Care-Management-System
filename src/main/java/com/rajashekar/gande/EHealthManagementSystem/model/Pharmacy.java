@@ -23,7 +23,7 @@ public class Pharmacy {
 	private int id;
 	
 	@Column(name = "name")
-	private int name;
+	private String name;
 	
 	@Column(name = "email_address")
 	private String email;
@@ -42,11 +42,11 @@ public class Pharmacy {
 		this.id = id;
 	}
 
-	public int getName() {
+	public String getName() {
 		return name;
 	}
 
-	public void setName(int name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 

@@ -37,57 +37,54 @@
 
 		<div class="container">
 			<!-- Navbar brand -->
-			<a class="navbar-brand" href="#">Update Account</a>
+			<a class="navbar-brand" href="#">Add a drug</a>
 			<form class="form-inline">
-				<a class="btn btn-outline-white"
-					th:href="@{/patient/patientPage}"
-					type="submit">Back</a> <a class="btn btn-outline-white"
-					th:href="@{/patient/logout}" type="submit">Log Out</a>
+				<a class="btn btn-outline-white" th:href="@{/pharmacy/pharmacyPage(pharmacy_id=${pharmacy.id})}" type="submit">Back</a>
+				<a class="btn btn-outline-white" th:href="@{/patient/logout}" type="submit">Log
+					Out</a>
 			</form>
 		</div>
 	</nav>
 	<br>
 	<br>
 	<div class="container">
-		<form th:object="${doctor}"
-			th:action="@{/doctor/update(doctor_id=${doctor.id})}"
+		<form
+			th:object="${drug}"
+			th:action="@{/pharmacy/updateDrug(drug_id=${drug.id})}"
 			class="border border-light p-5" method="post">
-			
-			<br> <label>Your name : </label> <br> <input type="text"
-				th:field="*{name}" placeholder="Your name"
-				class="form-control mb-4"> <label> Email Address : </label>
-			<br> <input type="text" th:field="*{email}" class="form-control"
-				placeholder="Email Address" autofocus="autofocus"> 
-				<br>
-				<label>
-				Password : </label> <br> 
-				<input type="password" name="password"
-				class="form-control" placeholder="Update your password ">
 
-			<br>
-			<div class="form-group">
-				<label>Select your specialty :</label> <select name="type">
-					<option th:each="type : ${doctor_types}" th:text="${type}"></option>
-				</select>
-			</div>
-			<div class="form-group">
-				<label>Are you available ? </label> <select name="available">
-					<option th:each="available : ${doctor_status}" th:text="${available}"></option>
-				</select>
-			</div>
-			<button class="btn btn-lg btn-secondary btn-block" data-toggle="modal"
-				data-target="#confirmModal" type="button">Update my account</button>
+			<span th:text="'Update drug for ' +  ${pharmacy.name}"></span>
+			<br><br>
+			 <label>Drug's name : </label>
+			  <br>
+			  <input type="text" th:field="*{name}" placeholder="Drug's name" class="form-control mb-4">
+			  <label> Quantity : </label>
+			  <br>
+			  <input type="number" th:field="*{quantity}" placeholder="Quantity" class="form-control mb-4">
+			  <label> Price ($) : </label>
+			  <br>
+			  <input type="number" th:field="*{price}" placeholder="Price" class="form-control mb-4">
+			  <label>Description : </label>
+			  <br>
+			  <input type="text" th:field="*{description}" placeholder="Description" class="form-control mb-4">
+				<br>
+				<label>Dosage : </label>
+			  <br>
+			  <input type="text" th:field="*{dosage}" placeholder="Dosage" class="form-control mb-4">
+			
+			<button class="btn btn-success btn-block my-4" data-toggle="modal"
+				data-target="#confirmModal" type="button">Add Drug</button>
 			
 			<div class="modal fade" id="confirmModal" tabindex="-1"
 				aria-labelledby="exampleModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLabel">Update Account</h5>
+							<h5 class="modal-title" id="exampleModalLabel">Add Drug</h5>
 							<button type="button" class="btn-close" data-dismiss="modal"
 								aria-label="Close"></button>
 						</div>
-						<div class="modal-body">Do you want to proceed with the account update?</div>
+						<div class="modal-body">Do you want to add this drug? </div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary"
 								data-dismiss="modal">No</button>
@@ -97,8 +94,8 @@
 				</div>
 			</div>
 		</form>
-		<br> <br>
 		<br>
+		<br><br>
 	</div>
 </body>
 </html>
